@@ -72,6 +72,6 @@ bar.o: bar.c
 ```
 files = foo.elc bar.o
 $(filter %.o,$(files)):%.o:%.c
-	$(CC) -c $(CFLAGS) $< -O $@
+	$(CC) -c $(CFLAGS) $< -o $@
 ```
 
