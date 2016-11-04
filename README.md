@@ -2,6 +2,7 @@
 #### 1.隐式推导
 
 make可以自动推导文件及其文件依赖关系后面的命令,所以我们没有必要在每一个**.o**文件后面都写上类似的命令，因为make 会自动识别并且自动推导命令.
+
 ```
 objects = main.o
 main.o:main.cc
@@ -48,8 +49,29 @@ vpath %.h ../header #表示要求make在"../headers"目录下搜索所有以".h"
 
 ####6.静态模式
 静态模式可以更加容易地定义多目标的规则，可以让我们的规则更有弹性。
-语法：
+
+例子：
+
 ```
-<targets...> :<target-pattern>:<prereq-patterns ...>
-	<commands>
+objects = foo.o bar.o
+all: $(objects)
+$(objects): %.o:%.c
+	$(CC) -c $(CFLAGS) $< -o $@
 ```
+上面的代码和下述代码等价：
+
+```
+foo.o: foo.c
+	$(CC) -c $(CFLAGS) foo.c -o foo.o
+bar.o: bar.c
+	$(CC) -c $(CFLAGS) bar.c -o bar.o
+```
+
+可以使用filter函数去除指定模式的文件，如下所示：
+
+```
+files = foo.elc bar.o
+$(filter %.o,$(files)):%.o:%.c
+	$(CC) -c $(CFLAGS) $< -O $@
+```
+
