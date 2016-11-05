@@ -319,8 +319,8 @@ files := $(foreach n,$(names),$(n).o)
 ```
 1.$(if <condition>, <then-part>)
 2.$(if <condition>,<then-part>,<else-part>)
-```
 
 if函数可以包含else或者不包含。即if函数的参数可以是两个，也可以是３个。<condition>参数是if的表达式，如果器返回为非空字符串，那么这个表达式就为真，于是<then-part>会被计算，否则<else-part>会被计算。
 
 如果<condition>为真，那么<then-part>会为整个函数的返回值，否则<else-part>会作为函数ｕｄｅ返回值。如果<else-part>没有定义，那么函数会返回空字符串。
+```
