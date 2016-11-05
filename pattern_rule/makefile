@@ -7,7 +7,8 @@ OBJ = main.o cal.o
 
 all:$(TARGET) 
 
-$(OBJ):$(pubsubst %.o,%.cc,$(OBJ))
+%.o:%.cc
+	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 $(TARGET):$(OBJ)
 	g++ -o $(TARGET) $(OBJ)
