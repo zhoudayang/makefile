@@ -360,6 +360,7 @@ $(CC) -c $(CPPFLAGS) $(CFLAGS)
 ```
 $(CXX) -c $(CPPFLAGS) $(CFLAGS)
 ```
+
 因此建议使用```.cc```而不是```.c或者.cpp```作为C++程序的后缀。
 
 #####链接object文件的隐含规则
@@ -367,7 +368,9 @@ $(CXX) -c $(CPPFLAGS) $(CFLAGS)
 ```
 x:y.o z.o
 ```
+
 如果y.c 与 z.c文件都存在，隐含规则会执行下述命令：
+
 ```
 cc -c x.c -o x.o
 cc -c y.c -o y.o
@@ -400,6 +403,7 @@ rm -f z.o
 %.o:%.c
 	$(CC) -c $(CFLAGS) $< -o $@
 ```
+
 上述makefile自定义了一个针对.o文件的隐含规则
 
 ####16.自动化变量
@@ -414,6 +418,7 @@ rm -f z.o
 可以使用下述格式来指定函数库文件及其组成。
 archive(member)
 例子：
+
 ```
 foolib(hack.o foo.o):hack.o foo.o
 	ar cr foolib hack.o foo.o
