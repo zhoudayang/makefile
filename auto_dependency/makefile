@@ -11,5 +11,5 @@ $(OBJS):%.o:%.cpp
 
 .PHONY: clean
 clean:
-	rm $(OBJS) $(TARGET)
+	-rm $(OBJS) $(TARGET)
 
