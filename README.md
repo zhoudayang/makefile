@@ -300,3 +300,22 @@ $(join <list1>,<list2>)
 返回：返回连接过后的字符串　
 示例：$(join aaa bbb,111 222 333) 返回值为"aaa111,bbb222,3333"
 ```
+##### 3.foreach函数
+foreach函数用于循环。语法如下：
+```
+$(foreach <var>,<list>,<text>)
+这个函数的意思是，将<list>中的单词逐一取出放到参数<var>所指定的变量之中，然后再执行<text>所包含的表达式。每次<text>会返回一个字符串，循环过程中,<text>返回的每个字符会以空格分隔，当循环结束的时候，<text> 返回的每个字符串所组成的整个字符串会是foreach函数的返回值。
+```
+例子：
+```
+names:=a b c d
+files := $(foreach n,$(names),$(n).o)
+执行完毕后，变量$(files)的值为"a.o b.o c.o d.o"
+```
+
+##### 4.if函数
+1.$(if <condition>, <then-part>)
+2.$(if <condition>,<then-part>,<else-part>)
+if函数可以包含else或者不包含。即if函数的参数可以是两个，也可以是３个。<condition>参数是if的表达式，如果器返回为非空字符串，那么这个表达式就为真，于是<then-part>会被计算，否则<else-part>会被计算。
+
+如果<condition>为真，那么<then-part>会为整个函数的返回值，否则<else-part>会作为函数ｕｄｅ返回值。如果<else-part>没有定义，那么函数会返回空字符串。
