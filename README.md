@@ -15,18 +15,18 @@ clean:
 	　-rm $(objects) main
 ```
 
-####2.在规则中使用通配符
+#### 2.在规则中使用通配符
 
 ```objects = $(wildcard *.o)```表示将object变量定义为所有.o文件组成的集合。在定义变量的时候，不能使用通配符，否则上述变量objects的值就为***.o**,除非使用**wildcard**函数.
 
-####3.引用其他的makefile文件
+#### 3.引用其他的makefile文件
 可以通过include 命令引用其他的makefile文件，如下所示:
 ```
 	include foo.make *.mk
 ```
 上面表示引用当前目录下的foo.make文件以及所有后缀为mk的文件。
 
-####4.make 的工作方式
+#### 4.make 的工作方式
 
 1.　读入所有的makefile
 2.　读入被include 的其他makefile
@@ -36,7 +36,7 @@ clean:
 6.　根据依赖关系，确定那些目标需要重新生成
 7.　执行生成命令
 
-####5.文件搜寻
+#### 5.文件搜寻
 为了指明更多的文件搜索路径，可以定义vpath变量。vpath的定义方式有下面３种:
 
 1. vpath<pattern> <directories> **为符合模式pattern的文件指定搜索路径为directories**
@@ -47,7 +47,7 @@ clean:
 vpath %.h ../header #表示要求make在"../headers"目录下搜索所有以".h"结尾的文件
 ```
 
-####6.静态模式
+#### 6.静态模式
 静态模式可以更加容易地定义多目标的规则，可以让我们的规则更有弹性。
 语法：
 ```
@@ -83,7 +83,7 @@ $(filter %.o,$(files)):%.o:%.c
 	$(CC) -c $(CFLAGS) $< -o $@
 ```
 
-####7.嵌套执行make
+#### 7.嵌套执行make
 在一些大型的工程中，我们会把不同的模块或者不同功能的源文件放在不同的目录中，我们可以在每个目录中都书写一个该目录下的makefile文件，这有利于维护我们的makefile.
 
 例如我们有一个子目录叫subdir, 这个目录下有一个makefile文件，来指明了这个目录下的文件的编译规则，那么我们总控的makefile文件可以这么写。
@@ -131,7 +131,7 @@ objects+=another.o
 ```
 这样，上面例子中的$(objects)最终的值为```main.o foo.o bar.o utils.o another.o```
 
-####10.使用条件判断
+#### 10.使用条件判断
 用两个例子来介绍这一部分的内容：
 例１:
 ```
@@ -157,7 +157,7 @@ endif
 ```
 类似于C++中宏定义中的#ifdef
 
-####11.函数
+#### 11.函数
 ##### 1.字符串处理函数
 ###### 1.subst
 ```
@@ -179,7 +179,7 @@ patsubst(%.c,%.o,x.c.c bar.c)
 将字符串"x.c.c bar.c"中符合模式[%.c]的单词替换为[%.o],故返回的结果为x.c.o bar.o
 ```
 
-######3.strip
+###### 3.strip
 ```
 $(strip <string>)
 名称：去空格函数
@@ -187,13 +187,13 @@ $(strip <string>)
 返回：返回去掉空格的字符串值
 ```
 
-######４.findstring
+###### 4.findstring
 $(findstring <find>,<in>)
 名称：查找字符串函数-findstring
 功能：在字符串<in>中查找<find>字符串
 返回：如果找到，返回<find>,否则返回空字符串
 
-######5.filter
+###### 5.filter
 ```
 $(filter <pattern...>,<text>)
 名称：过滤函数
@@ -208,7 +208,7 @@ cc $(filter %.c %.s,$(sources)) -o foo
 ```
 其中$(filter %.c %.s,$(sources))返回的值为"foo.c bar.c baz.s"
 
-######6.filter-out
+###### 6.filter-out
 ```
 $(filter-out <pattern ...>,<text>)
 名称：反过滤函数-filter-out
@@ -224,7 +224,7 @@ $(filter-out $(mains),$(objects))
 上述经过filter-out的返回值为bar.o以及foo.o
 ```
 
-######7.sort
+###### 7.sort
 ```
 $(sort <list>)
 名称：排序函数-sort
@@ -234,7 +234,7 @@ $(sort <list>)
 备注：sort函数会去除list之中重复的单词
 ```
 
-######8.word
+###### 8.word
 ```
 $(word <n>,<text>)
 名称：去单词函数-word
@@ -243,8 +243,8 @@ $(word <n>,<text>)
 示例:$(word 2,foo bar baz)　返回值为bar
 ```
 
-#####2.文件名操作函数
-######1.dir
+##### 2.文件名操作函数
+###### 1.dir
 ```
 $(dir <names ...>)
 名称：取目录函数　--dir
@@ -252,7 +252,7 @@ $(dir <names ...>)
 返回：返回文件名序列<names>中的目录部分
 示例：$(dir src/foo.c hacks)返回值为　"src/ ./"
 ```
-######2.notdir
+###### 2.notdir
 ```
 $(notdir <names...>)
 名称：取文件函数
@@ -260,7 +260,7 @@ $(notdir <names...>)
 返回：返回文件名序列<names>中的非目录部分
 示例:$(notdir src/foo.c hacks)返回值为"foo.c hacks"
 ```
-######3.suffix
+###### 3.suffix
 ```
 $(suffix <names...>)
 名称：取后缀函数--suffix
@@ -269,14 +269,14 @@ $(suffix <names...>)
 示例:$(suffix src/foo.c src-1.0/bar.c hacks) 返回值为".c .c"
 ```
 
-######4.basename
+###### 4.basename
 ```
 名称：取前缀函数--basename
 功能：从文件名序列中取出各个文件名的前缀部分
 返回：返回文件名序列<names>的前缀序列，如果文件没有前缀，则返回空字符串。
 示例：$(basename src/foo.c src-1.0/bar.c hacks)的返回值为"src/foo src-1.0/bar hacks"
 ```
-######5.addsufix
+###### 5.addsufix
 ```
 $(addsuffix <suffix>,<names...>)
 名称：加后缀函数-addsuffix
@@ -285,7 +285,7 @@ $(addsuffix <suffix>,<names...>)
 示例：$(addsuffix .c,foo bar)返回值为"foo.c bar.c"
 ```
 
-######6.addprefix
+###### 6.addprefix
 ```
 $(addprefix <suffix>,<names...>)
 名称：加后缀函数--addsuffix
@@ -294,7 +294,7 @@ $(addprefix <suffix>,<names...>)
 示例：$(addprefix .c,foo bar)返回值为"foo.c bar.c"
 ```
 
-######7.join
+###### 7.join
 ```
 $(join <list1>,<list2>)
 名称：连接函数--join
@@ -332,7 +332,7 @@ contents:=$(shell cat foo)
 files:=$(shell echo *.c)
 ```
 
-####12.构建多个目标
+#### 12.构建多个目标
 通过构建伪目标all的方式来同时指定多个目标为终极目标。
 例子：
 ```
@@ -341,18 +341,18 @@ all:exec1 exec2
 这个makefile的终极目标由exec1和exec2构成
 ```
 
-####13.隐含规则
+#### 13.隐含规则
 ```
 foo:foo.o bar.o
 cc- o foo foo.o bar.o $(CFLAGS) $(LDFLAGS)
 ```
 我们注意到，上述makefile没有写下如何生成foo.o和bar.o这两个目标的规则和命令，因为make的隐含规则功能为我们自动推导这两个目标的依赖目标。
 
-#####隐含规则一览
+##### 隐含规则一览
 ###### 1.C程序
 ```<n>.o的依赖目标会自动推导为<n>.c,并且其生成命令为 $(CC) -c $(CPPFLAGS) $(CFLAGS)```
 
-######2.C++程序
+###### 2.C++程序
 
 ```<n>.o的依赖目标会自动推导为<n>.c或者<n>.cc,并且其生成命令为 $(CC) -c $(CPPFLAGS) $(CXXFLAGS)```
 
